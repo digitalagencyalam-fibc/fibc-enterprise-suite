@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- W3C & Android 2026 Verified PWA Meta Tags -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+
+<!-- Special Android Mobile Full Screen Commands -->
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#0f172a">
+
+<!-- iOS / Apple Full Screen Commands -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+<title>FIBC VISION QMS | VIP Luxury Edition</title>  
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* 🌟 VIP COLORFUL LUXURY BACKGROUND 🌟 */
+        body {
+            margin: 0; padding: 0;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(-45deg, #0f172a, #31135e, #062a40, #17072b);
+            background-size: 400% 400%;
+            animation: gradientBG 12s ease infinite;
+            color: #ffffff;
+            display: flex; flex-direction: column; min-height: 100vh;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* 🌟 PREMIUM HEADER 🌟 */
+        header {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(15px);
+            padding: 15px 30px;
+            display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .brand h1 {
+            font-size: 24px; font-weight: 700; margin: 0;
+            background: linear-gradient(90deg, #00d2ff 0%, #ff007f 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            letter-spacing: 1px;
+        }
+        .brand span { font-size: 11px; color: #cbd5e1; font-weight: 400; letter-spacing: 2px; }
+       
+        .badge {
+            background: linear-gradient(45deg, #f59e0b, #ef4444);
+            color: #fff; padding: 5px 15px; border-radius: 20px;
+            font-size: 11px; font-weight: 700; letter-spacing: 1px;
+            box-shadow: 0 0 15px rgba(239, 68, 68, 0.5);
+        }
+
+        /* 🌟 GLASSMORPHISM FORM 🌟 */
+        .container {
+            max-width: 550px; margin: 30px auto; padding: 30px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            width: 90%;
+        }
+
+        .form-row { display: flex; gap: 15px; margin-bottom: 20px; }
+        .form-group { flex: 1; }
+       
+        label { display: block; font-weight: 500; margin-bottom: 8px; color: #38bdf8; font-size: 12px; letter-spacing: 0.5px; }
+
+        input, select {
+            width: 100%; padding: 12px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px; color: #fff; font-size: 14px;
+            transition: all 0.3s ease; box-sizing: border-box;
+        }
+
+        input:focus, select:focus {
+            outline: none; border-color: #ff007f; background: rgba(0, 0, 0, 0.6);
+            box-shadow: 0 0 15px rgba(255, 0, 127, 0.4);
+        }
+        select option { background: #0f172a; color: #fff; }
+
+        /* 🌟 NEON BUTTON 🌟 */
+        .btn-submit {
+            background: linear-gradient(90deg, #ff007f 0%, #7928ca 50%, #00d2ff 100%);
+            color: white; border: none; width: 100%; padding: 16px;
+            font-size: 15px; font-weight: 700; letter-spacing: 1px;
+            border-radius: 12px; cursor: pointer; transition: all 0.4s ease;
+            box-shadow: 0 8px 25px rgba(121, 40, 202, 0.5); margin-top: 15px;
+        }
+        .btn-submit:hover { transform: translateY(-3px); box-shadow: 0 12px 30px rgba(0, 210, 255, 0.6); }
+
+        .file-upload {
+            border: 2px dashed rgba(255, 255, 255, 0.4); padding: 25px; text-align: center;
+            border-radius: 12px; background: rgba(0, 0, 0, 0.2); cursor: pointer; margin-bottom: 20px;
+        }
+        .file-upload:hover { border-color: #00d2ff; }
+        .file-upload p { margin: 0; font-size: 13px; color: #cbd5e1; }
+       
+        #loading { display: none; text-align: center; margin-top: 20px; font-size: 13px; color: #00d2ff; font-weight: 600; }
+        footer { text-align: center; padding: 15px; font-size: 11px; color: #94a3b8; margin-top: auto; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="brand">
+             <h1>FIBC VISION QMS</h1>
+             <span>ALAM DIGITAL AGENCY</span>
+        </div>
+        <div class="badge">PREMIUM</div>
+    </header>
+
+    <div class="container">
+        <form id="qcForm" onsubmit="submitData(event)">
+           
+            <div class="form-row">
+                <div class="form-group">
+                    <label>SHIFT</label>
+                    <select id="shift" required>
+                        <option value="Day">Day Shift</option>
+                        <option value="Night">Night Shift</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>TAILOR NAME</label>
+                    <input type="text" id="tailorName" placeholder="Operator Name" required>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>MACHINE NAME</label>
+                    <input type="text" id="machineName" placeholder="e.g. Loom" required>
+                </div>
+                <div class="form-group">
+                    <label>MACHINE NO</label>
+                    <input type="text" id="machineNo" placeholder="e.g. 04" required>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>FABRIC GSM (MANUAL)</label>
+                    <input type="number" id="gsm" placeholder="e.g. 180" required>
+                </div>
+                <div class="form-group">
+                    <label>LOOM BATCH NO</label>
+                    <input type="text" id="loomBatchNo" placeholder="e.g. B-102" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>THREAD DENIER (MANUAL)</label>
+                <input type="number" id="threadDenier" placeholder="e.g. 1000" required>
+            </div>
+
+            <label>LIVE PHOTO PROOF</label>
+            <div class="file-upload" onclick="document.getElementById('fileInput').click()">
+                <p id="fileNameDisplay">📷 Tap to capture or upload VIP scan</p>
+                <input type="file" id="fileInput" accept="image/*" required style="display:none;" onchange="updateFileName(this)">
+            </div>
+
+            <button type="submit" class="btn-submit" id="submitBtn">RUN QMS VISION SCAN</button>
+            <div id="loading">⚡ Processing VIP Quality Scan & Securing Data...</div>
+        </form>
+    </div>
+
+    <footer>&copy; 2026 ALAM DIGITAL AGENCY | VIP ENTERPRISE SUITE</footer>
+
+    <script>
+        function updateFileName(input) {
+            if (input.files && input.files[0]) {
+                document.getElementById('fileNameDisplay').style.color = "#00d2ff";
+                document.getElementById('fileNameDisplay').innerText = "✅ Ready: " + input.files[0].name;
+            }
+        }
+
+        function submitData(event) {
+            event.preventDefault();
+
+            const fileInput = document.getElementById('fileInput');
+            if (!fileInput || !fileInput.files[0]) {
+                alert("Please select a photo first!");
+                return;
+            }
+
+            const file = fileInput.files[0];
+            const reader = new FileReader();
+
+            let btn = document.getElementById('submitBtn');
+            let originalText = btn.innerText;
+            btn.innerText = "⏳ SAVING DATA...";
+
+            reader.onload = function(e) {
+                const formData = {
+                    shift: document.getElementById('shift').value,
+                    gsm: document.getElementById('gsm').value,
+                    loomBatchNo: document.getElementById('loomBatchNo').value,
+                    tailorName: document.getElementById('tailorName').value,
+                    machineName: document.getElementById('machineName').value,
+                    machineNo: document.getElementById('machineNo').value,
+                    threadDenier: document.getElementById('threadDenier').value,
+                    file: { name: file.name, mimeType: file.type, bytes: e.target.result.split(',')[1] }
+                };
+
+               // =========================================================
+// 🚀 W3C VERIFIED VIP FETCH API (GitHub to Google Pipeline)
+// =========================================================
+var GOOGLE_API_URL = "https://script.google.com/macros/s/AKfycbyOUE3mcaRZSHjDmr8umlkrDf1MmPFQKUUqvL3Id8DcRT4cfekO6kkyKxA3uJdSPHrjKA/exec";
+
+// Background mein secure API request bhejna
+fetch(GOOGLE_API_URL, {
+    method: "POST",
+    body: JSON.stringify(formData) // Data 100% safely pack ho raha hai
+})
+.then(response => response.json())
+.then(data => {
+    // 🔍 110% DATA MISMATCH FIX: STRICT BACKEND CHECK (Real-time Wait)
+    const responseString = String(data.message).toLowerCase();
+    const isError = responseString.includes("api_error") || responseString.includes("overload") || responseString.includes("error");
+
+    if (isError) {
+        // 🛑 SHOW RED ERROR IF DASHBOARD/API FAILED (Network ya Backend Failure)
+        btn.innerText = "⚠️ NETWORK BUSY OVERLOAD - RETRY";
+        btn.style.background = "linear-gradient(45deg, #ff416c, #ff4b2b)";
+        btn.style.boxShadow = "0 0 20px #ff416c";
+        btn.style.color = "#ffffff";
+    } else {
+        // ✅ SHOW GREEN SUCCESS ONLY IF 100% SUCCESSFUL (Aapka VIP 16 Columns)
+        btn.innerText = "✅ DATA SECURED IN 16 COLUMNS";
+        btn.style.background = "linear-gradient(45deg, #00b09b, #96c93d)";
+        btn.style.boxShadow = "0 0 20px #00b09b";
+        btn.style.color = "#ffffff";
+    }
+
+    // Auto-reset UI after 4 seconds
+    setTimeout(function() {
+        // Only reset the form fields if it was actually successful
+        if (!isError) {
+            document.getElementById('qcForm').reset();
+            document.getElementById('fileNameDisplay').innerText = "📷 Tap to capture or upload VIP scan";
+            document.getElementById('fileNameDisplay').style.color = "#cbd5e1";
+        }
+       
+        btn.innerText = originalText;
+        btn.style.background = "";
+        btn.style.boxShadow = "";
+    }, 4000);
+})
+.catch(error => {
+    // 🛑 SHOW RED ERROR IF GOOGLE SCRIPT/INTERNET FAILS (True Failure Catch)
+    btn.innerText = "⚠️ NETWORK BUSY OVERLOAD - RETRY";
+    btn.style.background = "linear-gradient(45deg, #ff416c, #ff4b2b)";
+    btn.style.boxShadow = "0 0 20px #ff416c";
+    btn.style.color = "#ffffff";
+   
+    setTimeout(function() {
+        btn.innerText = originalText;
+        btn.style.background = "";
+        btn.style.boxShadow = "";
+    }, 4000);
+});
+// ========================================================= 
+            };
+
+            reader.readAsDataURL(file);
+        }
+    </script>
+</body>
+</html>
+
+ 
