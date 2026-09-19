@@ -171,10 +171,40 @@
             </div>
 
             <label>LIVE PHOTO PROOF</label>
-            <div class="file-upload" onclick="document.getElementById('fileInput').click()">
-                <p id="fileNameDisplay">📷 Tap to capture or upload VIP scan</p>
-               <input type="file" id="fileInput" accept="image/*" required style="display:none;" onchange="updateFileName(this)"> 
-            </div>
+<div style="display: flex; gap: 10px; margin-bottom: 15px;">
+    <!-- VIP Button 1: Live Camera -->
+    <div class="file-upload" onclick="document.getElementById('cameraInput').click()" style="flex: 1; padding: 12px; border-radius: 8px; background: linear-gradient(45deg, #ff416c, #ff4b2b); color: white; text-align: center; cursor: pointer; box-shadow: 0 4px 10px rgba(255, 65, 108, 0.3);">
+        <p id="cameraText" style="margin: 0; font-size: 14px; font-weight: bold;">📸 LIVE CAMERA</p>
+        <input type="file" id="cameraInput" accept="image/*" capture="environment" style="display:none;" onchange="handleVIPInput(this, 'cameraText', 'galleryText', '🖼️ GALLERY')">
+    </div>
+    
+    <!-- VIP Button 2: Gallery -->
+    <div class="file-upload" onclick="document.getElementById('galleryInput').click()" style="flex: 1; padding: 12px; border-radius: 8px; background: linear-gradient(45deg, #1e90ff, #00bfff); color: white; text-align: center; cursor: pointer; box-shadow: 0 4px 10px rgba(30, 144, 255, 0.3);">
+        <p id="galleryText" style="margin: 0; font-size: 14px; font-weight: bold;">🖼️ GALLERY</p>
+        <input type="file" id="galleryInput" accept="image/*" style="display:none;" onchange="handleVIPInput(this, 'galleryText', 'cameraText', '📸 LIVE CAMERA')">
+    </div>
+</div>
+
+<!-- 🛡️ THE SHIELD: Hidden Master Input to Keep Google Sheets 100% Safe -->
+<input type="file" id="fileInput" style="display:none;">
+
+<!-- 🚀 JavaScript Logic (Zero Data Mismatch Guarantee) -->
+<script>
+function handleVIPInput(input, activeTextId, resetTextId, resetTextDefault) {
+    if (input.files && input.files[0]) {
+        // Change text of clicked button to show success and file name
+        let fileName = input.files[0].name;
+        document.getElementById(activeTextId).innerText = "✅ " + fileName.substring(0, 12) + "...";
+        // Reset the other button to its original text
+        document.getElementById(resetTextId).innerText = resetTextDefault;
+        
+        // MAGIC TRICK: Transfer the selected file to the Main Master Input securely
+        const dataTransfer = new DataTransfer();
+        dataTransfer.items.add(input.files[0]);
+        document.getElementById('fileInput').files = dataTransfer.files;
+    }
+}
+</script>
 
             <button type="submit" class="btn-submit" id="submitBtn">RUN QMS VISION SCAN</button>
             <div id="loading">⚡ Processing VIP Quality Scan & Securing Data...</div>
