@@ -278,16 +278,16 @@ fetch(GOOGLE_API_URL, {
 });
 // ========================================================= 
             };
-// 🚀 W3C HTML5 CANVAS COMPRESSION (4K Lock for AI)
+// 🚀 W3C HTML5 CANVAS COMPRESSION (Safe Mobile HD Lock)
             reader.onload = function() {
                 const img = new Image();
                 img.onload = function() {
                     const canvas = document.createElement('canvas');
                     const ctx = canvas.getContext('2d');
                     
-                    // Max dimensions for Gemini AI (4K)
-                    const MAX_WIDTH = 3072;
-                    const MAX_HEIGHT = 3072;
+                    // Safe dimensions for Mobile RAM & Gemini AI
+                    const MAX_WIDTH = 1920;
+                    const MAX_HEIGHT = 1920;
                     let width = img.width;
                     let height = img.height;
                     
@@ -307,10 +307,10 @@ fetch(GOOGLE_API_URL, {
                     canvas.height = height;
                     ctx.drawImage(img, 0, 0, width, height);
                     
-                    // Compress 100% JPEG (Superfast Upload, 0% OCR Loss)
-                    const compressedBase64 = canvas.toDataURL('image/jpeg', 1.0).split(',')[1];
+                    // Compress 92% JPEG (Prevents Mobile Crash, Keeps OCR Sharp)
+                    const compressedBase64 = canvas.toDataURL('image/jpeg', 0.92).split(',')[1];
                     
-                    // Sending compressed superfast data to Google Backend
+                    // Sending safe data to Google Backend
                     submitDataToGoogle(compressedBase64, file.name, file.type);
                 };
                 img.src = reader.result;
