@@ -284,8 +284,9 @@ fetch(GOOGLE_API_URL, {
         // Only reset the form fields if it was actually successful
         if (!isError) {
             document.getElementById('qcForm').reset();
-            document.getElementById('fileNameDisplay').innerText = "📷 Tap to capture or upload VIP scan";
-            document.getElementById('fileNameDisplay').style.color = "#cbd5e1";
+         document.getElementById('cameraText').innerText = "📸 LIVE CAMERA";
+        document.getElementById('galleryText').innerText = "🖼️ GALLERY";
+        document.getElementById('fileInput').value = "";   
         }
        
         btn.innerText = originalText;
