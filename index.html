@@ -173,7 +173,7 @@
             <label>LIVE PHOTO PROOF</label>
             <div class="file-upload" onclick="document.getElementById('fileInput').click()">
                 <p id="fileNameDisplay">📷 Tap to capture or upload VIP scan</p>
-               <input type="file" id="fileInput" accept="image/*" capture="environment" required style="display:none;" onchange="document.getElementById('fileNameDisplay').innerText = this.files[0] ? '📸 ' + this.files[0].name : '📷 Tap to capture or upload VIP scan'"> 
+               <input type="file" id="fileInput" accept="image/*" required style="display:none;" onchange="updateFileName(this)"> 
             </div>
 
             <button type="submit" class="btn-submit" id="submitBtn">RUN QMS VISION SCAN</button>
