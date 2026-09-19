@@ -260,40 +260,59 @@ fetch(GOOGLE_API_URL, {
     body: JSON.stringify(formData) // Data 100% safely pack ho raha hai
 })
 .then(response => response.json())
-.then(data => {
-    // 🔍 110% DATA MISMATCH FIX: STRICT BACKEND CHECK (Real-time Wait)
-    const responseString = String(data.message).toLowerCase();
-    const isError = responseString.includes("api_error") || responseString.includes("overload") || responseString.includes("error");
+    .then(data => {
+        // 🛑 SMART ERROR DETECTION (No Fake Green Ticks)
+        let responseText = JSON.stringify(data).toLowerCase();
+        let isRealSuccess = data.status === 'success' && !responseText.includes("error") && !responseText.includes("overloaded");
 
-    if (isError) {
-        // 🛑 SHOW RED ERROR IF DASHBOARD/API FAILED (Network ya Backend Failure)
-        btn.innerText = "⚠️ NETWORK BUSY OVERLOAD - RETRY";
-        btn.style.background = "linear-gradient(45deg, #ff416c, #ff4b2b)";
-        btn.style.boxShadow = "0 0 20px #ff416c";
-        btn.style.color = "#ffffff";
-    } else {
-        // ✅ SHOW GREEN SUCCESS ONLY IF 100% SUCCESSFUL (Aapka VIP 16 Columns)
-        btn.innerText = "✅ DATA SECURED IN 16 COLUMNS";
-        btn.style.background = "linear-gradient(45deg, #00b09b, #96c93d)";
-        btn.style.boxShadow = "0 0 20px #00b09b";
-        btn.style.color = "#ffffff";
-    }
-
-    // Auto-reset UI after 4 seconds
-    setTimeout(function() {
-        // Only reset the form fields if it was actually successful
-        if (!isError) {
-            document.getElementById('qcForm').reset();
-         document.getElementById('cameraText').innerText = "📸 LIVE CAMERA";
-        document.getElementById('galleryText').innerText = "🖼️ GALLERY";
-        document.getElementById('fileInput').value = "";   
+        if (isRealSuccess) {
+            // ✅ SUCCESS (Green VIP Button)
+            btn.innerText = "✅ DATA SECURED IN 16 COLUMNS";
+            btn.style.background = "linear-gradient(45deg, #00b09b, #96c93d)";
+            btn.style.boxShadow = "0 0 20px #00b09b";
+            btn.style.color = "#ffffff";
+            
+            // SPI Count Display (Crash-proof check)
+            if (document.getElementById('spiResultBox') && document.getElementById('spiCountValue')) {
+                document.getElementById('spiResultBox').style.display = "block";
+                document.getElementById('spiCountValue').innerText = data.SPI_Count || "Scanned";
+                document.getElementById('spiCountValue').style.color = "#00e676";
+            }
+        } else {
+            // ❌ API ERROR / OVERLOADED (Red Alert Button)
+            btn.innerText = "❌ SERVER OVERLOADED - RETRY";
+            btn.style.background = "linear-gradient(45deg, #ff416c, #ff4b2b)";
+            btn.style.boxShadow = "0 0 20px #ff416c";
+            btn.style.color = "#ffffff";
+            
+            if (document.getElementById('spiResultBox') && document.getElementById('spiCountValue')) {
+                document.getElementById('spiResultBox').style.display = "block";
+                document.getElementById('spiCountValue').innerText = "SYSTEM FAILED";
+                document.getElementById('spiCountValue').style.color = "#ff416c";
+            }
         }
-       
-        btn.innerText = originalText;
-        btn.style.background = "";
-        btn.style.boxShadow = "";
-    }, 4000);
-})
+
+        // 🔄 CRASH-PROOF AUTO-RESET (4 Seconds)
+        setTimeout(function() {
+            if (isRealSuccess) {
+                document.getElementById('qcForm').reset();
+                // New VIP Buttons Reset (Crash-proof check)
+                if (document.getElementById('cameraText')) document.getElementById('cameraText').innerText = "📸 LIVE CAMERA";
+                if (document.getElementById('galleryText')) document.getElementById('galleryText').innerText = "🖼️ GALLERY";
+                if (document.getElementById('fileInput')) document.getElementById('fileInput').value = "";
+            }
+            
+            // Reset Main Button
+            btn.innerText = originalText;
+            btn.style.background = "";
+            btn.style.boxShadow = "";
+            btn.style.color = "";
+            
+            if (document.getElementById('spiResultBox')) {
+                document.getElementById('spiResultBox').style.display = "none";
+            }
+        }, 4000);
+    })
 .catch(error => {
     // 🛑 SHOW RED ERROR IF GOOGLE SCRIPT/INTERNET FAILS (True Failure Catch)
     btn.innerText = "⚠️ NETWORK BUSY OVERLOAD - RETRY";
