@@ -278,16 +278,11 @@ fetch(GOOGLE_API_URL, {
 });
 // ========================================================= 
             };
-// 🔙 ORIGINAL VIP OLD CODE (Direct Upload, No Compression)
-            reader.onload = function() {
-                const base64Data = reader.result.split(',')[1];
-                submitDataToGoogle(base64Data, file.name, file.type);
-            };
-            
-            reader.readAsDataURL(file);
-        }); // End of form submit event
-           
-    </script>
+
+
+        reader.readAsDataURL(file);
+    }
+</script>
 </body>
 </html>
 
